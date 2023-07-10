@@ -32,7 +32,7 @@ class GenerateProtocolRequest
      * @param $references
      * @param $waybills
      */
-    protected function __construct(string $sessionType, array $parcelIds, array $references, array $waybills)
+    protected function __construct(SessionType $sessionType, array $parcelIds, array $references, array $waybills)
     {
         $this->sessionType = $sessionType;
         $this->parcelIds = $parcelIds;
@@ -43,17 +43,17 @@ class GenerateProtocolRequest
         $this->printingPolicy = LabelPrintingPolicy::IGNORE_ERRORS();
     }
 
-    public static function fromParcelIds($sessionType, array $parcelIds): GenerateProtocolRequest
+    public static function fromParcelIds(SessionType $sessionType, array $parcelIds): GenerateProtocolRequest
     {
         return new static($sessionType, $parcelIds, [], []);
     }
 
-    public static function fromReferences($sessionType, array $references): GenerateProtocolRequest
+    public static function fromReferences(SessionType $sessionType, array $references): GenerateProtocolRequest
     {
         return new static($sessionType, [], $references, []);
     }
 
-    public static function fromWaybills($sessionType, array $waybills): GenerateProtocolRequest
+    public static function fromWaybills(SessionType $sessionType, array $waybills): GenerateProtocolRequest
     {
         return new static($sessionType, [], [], $waybills);
     }
