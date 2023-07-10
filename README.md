@@ -1,5 +1,14 @@
 # dpd-pl-api-php
-Klient API w języku PHP do komunikacji z następującymi web-serwisami firmy kurierskiej DPD:
+Klient API do komunikacji z web-serwisami firmy kurierskiej DPD, dostosowany do PHP >= 8.0 na bazie wersji https://github.com/t3ko/dpd-pl-api-php/releases/tag/0.4, stworzonej przez Tomasza Konarskiego.
+
+Wdrożone zmiany:
+- Zgodność z wersją PHP >= 8.0.
+- Upgrade z "phpro/soap-client": "^1.0" do "phpro/soap-client": "^2.4.2".
+- Dodanie obsługi rozszerzenia SOAP-EXT "php-soap/ext-soap-engine": "^1.4.1".
+- Parametr SessionType przekazywany bezpośrednio do klasy GenerateLabelsRequest.
+- Parametr SessionType przekazywany bezpośrednio do klasy GenerateProtocolRequest.
+
+Klient obsługuje następujące web-serwisy:
 - `PackageService` (rejestrowanie przesyłek, drukowanie etykiet i protokołów przekazania przesyłek kurierowi, zamawianie kuriera po odbiór przesyłki)
 - `AppService` (obsługa zleceń odbioru przesyłek od osób trzecich)
 - `InfoService` (tracking przesyłek)
@@ -11,7 +20,7 @@ Poprzez plik `composer.json`:
 ```json
 {
     "require": {
-        "radz2k/dpd-pl-api-php": "^0"
+        "radz2k/dpd-pl-api-php": "dev-master"
     }
 }
 ```
@@ -210,21 +219,21 @@ Obiekt żądania można skonstruować na trzy sposoby:
 ```php
 use \radz2k\Dpd\Request\GenerateLabelsRequest;
 
-$request = GenerateLabelsRequest::fromWaybills(['0000092494467Q']);
+$request = GenerateLabelsRequest::fromWaybills(**SessionType**, ['0000092494467Q']);
 ```
 - przy użyciu numerów identyfikatorów paczek nadanych przez DPD w kroku 1.:
 ```php
 use \radz2k\Dpd\Request\GenerateLabelsRequest;
 
 $parcelId = $parcel->getId();
-$request = GenerateLabelsRequest::fromParcelIds([$parcelId]);
+$request = GenerateLabelsRequest::fromParcelIds(**SessionType**, [$parcelId]);
 ```
 - lub, korzystając z pola `reference` paczek
 ```php
 use \radz2k\Dpd\Request\GenerateLabelsRequest;
 
 $parcelRef = $parcel->getReference();
-$request = GenerateLabelsRequest::fromReferences([$parcelRef]);
+$request = GenerateLabelsRequest::fromReferences(**SessionType**, [$parcelRef]);
 ```
 (oczywiście tutaj trzeba pamiętać że pole `reference` to dowolny string który chcemy powiązać z paczką -
 np. numer zamówienia do wysyłki itp. - wobec czego jeśli nie przekażemy żadnej wartości tego pola w kroku 1. gdy rejestrujemy
@@ -266,9 +275,9 @@ korzystając z numerów listów przewozowych, identyfikatorów paczek lub refere
 ```php
 use \radz2k\Dpd\Request\GenerateProtocolRequest;
 
-$request = GenerateProtocolRequest::fromWaybills([...]);
-$request = GenerateProtocolRequest::fromParcelIds([...]);
-$request = GenerateProtocolRequest::fromReferences([...]);
+$request = GenerateProtocolRequest::fromWaybills(**SessionType**, [...]);
+$request = GenerateProtocolRequest::fromParcelIds(**SessionType**, [...]);
+$request = GenerateProtocolRequest::fromReferences(**SessionType**, [...]);
 ```
 
 ### GenerateProtocolResponse
