@@ -13,7 +13,7 @@ class GenerateLabelsRequestTest extends TestCase
 {
     public function testCreationFromParcelIds()
     {
-        $request = GenerateLabelsRequest::fromParcelIds([42, 43, 44]);
+        $request = GenerateLabelsRequest::fromParcelIds(SessionType::DOMESTIC(),[42, 43, 44]);
         $payload = $request->toPayload();
 
         list($package) = $payload->getDpdServicesParams()->getSession()->getPackages();
@@ -42,7 +42,7 @@ class GenerateLabelsRequestTest extends TestCase
 
     public function testCreationFromReferences()
     {
-        $request = GenerateLabelsRequest::fromReferences(['Reference1', 'Reference2', 'Reference3']);
+        $request = GenerateLabelsRequest::fromReferences(SessionType::DOMESTIC(),['Reference1', 'Reference2', 'Reference3']);
         $payload = $request->toPayload();
 
         list($package) = $payload->getDpdServicesParams()->getSession()->getPackages();
@@ -71,7 +71,7 @@ class GenerateLabelsRequestTest extends TestCase
 
     public function testCreationFromWaybills()
     {
-        $request = GenerateLabelsRequest::fromWaybills(['Waybill1', 'Waybill2', 'Waybill3']);
+        $request = GenerateLabelsRequest::fromWaybills(SessionType::DOMESTIC(),['Waybill1', 'Waybill2', 'Waybill3']);
         $payload = $request->toPayload();
 
         list($package) = $payload->getDpdServicesParams()->getSession()->getPackages();

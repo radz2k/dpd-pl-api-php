@@ -6,6 +6,7 @@ use radz2k\Dpd\Objects\Package;
 use radz2k\Dpd\Objects\Parcel;
 use radz2k\Dpd\Objects\Receiver;
 use radz2k\Dpd\Objects\Sender;
+use radz2k\Dpd\Objects\Enum\SessionType;
 use radz2k\Dpd\Request\GenerateLabelsRequest;
 use radz2k\Dpd\Request\GeneratePackageNumbersRequest;
 
@@ -25,7 +26,7 @@ class GenerateLabelsTest extends ApiIntegrationTestCase
         $result = self::$api->generatePackageNumbers(GeneratePackageNumbersRequest::fromPackage($package));
         $waybill = $result->getPackages()[0]->getParcels()[0]->getWaybill();
 
-        $result = self::$api->generateLabels(GenerateLabelsRequest::fromWaybills([$waybill]));
+        $result = self::$api->generateLabels(GenerateLabelsRequest::fromWaybills(SessionType::DOMESTIC(), [$waybill]));
         self::assertNotNull($result);
         self::assertNotEmpty($result->getFileContent());
     }

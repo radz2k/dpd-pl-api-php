@@ -32,7 +32,7 @@ class GenerateLabelsRequest
      * @param $references
      * @param $waybills
      */
-    protected function __construct(string $sessionType, array $parcelIds = [], array $references = [], array $waybills = [])
+    protected function __construct(SessionType $sessionType, array $parcelIds = [], array $references = [], array $waybills = [])
     {
         $this->sessionType = $sessionType;
         $this->parcelIds = $parcelIds;
@@ -43,17 +43,17 @@ class GenerateLabelsRequest
         $this->printingPolicy = LabelPrintingPolicy::STOP_ON_FIRST_ERROR();
     }
 
-    public static function fromParcelIds(string $sessionType, array $parcelIds): GenerateLabelsRequest
+    public static function fromParcelIds(SessionType $sessionType, array $parcelIds): GenerateLabelsRequest
     {
         return new static($sessionType, $parcelIds);
     }
 
-    public static function fromReferences(string $sessionType, array $references): GenerateLabelsRequest
+    public static function fromReferences(SessionType $sessionType, array $references): GenerateLabelsRequest
     {
         return new static($sessionType, [], $references);
     }
 
-    public static function fromWaybills(string $sessionType, array $waybills): GenerateLabelsRequest
+    public static function fromWaybills(SessionType $sessionType, array $waybills): GenerateLabelsRequest
     {
         return new static($sessionType, [], [], $waybills);
     }
