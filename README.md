@@ -219,21 +219,21 @@ Obiekt żądania można skonstruować na trzy sposoby:
 ```php
 use \radz2k\Dpd\Request\GenerateLabelsRequest;
 
-$request = GenerateLabelsRequest::fromWaybills(**SessionType**, ['0000092494467Q']);
+$request = GenerateLabelsRequest::fromWaybills(SessionType, ['0000092494467Q']);
 ```
 - przy użyciu numerów identyfikatorów paczek nadanych przez DPD w kroku 1.:
 ```php
 use \radz2k\Dpd\Request\GenerateLabelsRequest;
 
 $parcelId = $parcel->getId();
-$request = GenerateLabelsRequest::fromParcelIds(**SessionType**, [$parcelId]);
+$request = GenerateLabelsRequest::fromParcelIds(SessionType, [$parcelId]);
 ```
 - lub, korzystając z pola `reference` paczek
 ```php
 use \radz2k\Dpd\Request\GenerateLabelsRequest;
 
 $parcelRef = $parcel->getReference();
-$request = GenerateLabelsRequest::fromReferences(**SessionType**, [$parcelRef]);
+$request = GenerateLabelsRequest::fromReferences(SessionType, [$parcelRef]);
 ```
 (oczywiście tutaj trzeba pamiętać że pole `reference` to dowolny string który chcemy powiązać z paczką -
 np. numer zamówienia do wysyłki itp. - wobec czego jeśli nie przekażemy żadnej wartości tego pola w kroku 1. gdy rejestrujemy
@@ -275,9 +275,9 @@ korzystając z numerów listów przewozowych, identyfikatorów paczek lub refere
 ```php
 use \radz2k\Dpd\Request\GenerateProtocolRequest;
 
-$request = GenerateProtocolRequest::fromWaybills(**SessionType**, [...]);
-$request = GenerateProtocolRequest::fromParcelIds(**SessionType**, [...]);
-$request = GenerateProtocolRequest::fromReferences(**SessionType**, [...]);
+$request = GenerateProtocolRequest::fromWaybills(SessionType, [...]);
+$request = GenerateProtocolRequest::fromParcelIds(SessionType, [...]);
+$request = GenerateProtocolRequest::fromReferences(SessionType, [...]);
 ```
 
 ### GenerateProtocolResponse
