@@ -2,9 +2,12 @@
 
 namespace radz2k\Dpd\Objects\Enum;
 
+use InvalidArgumentException;
+
 final class Currency
 {
     private static $pln;
+    private static $czk;
     private static $eur;
     private static $usd;
     private static $chf;
@@ -20,6 +23,17 @@ final class Currency
     {
         $this->value = $value;
     }
+    
+    public static function createByCode(string $code): Currency
+    {
+        $methodName = strtoupper($code);
+
+        if (method_exists(__CLASS__, $methodName)) {
+            return call_user_func([__CLASS__, $methodName]);
+        }
+
+        throw new InvalidArgumentException("Not supported currency code: $code");
+    }
 
     public static function PLN(): Currency
     {
@@ -28,6 +42,15 @@ final class Currency
         }
 
         return static::$pln;
+    }
+    
+    public static function CZK(): Currency
+    {
+        if (null === static::$czk) {
+            static::$czk = new static('CZK');
+        }
+
+        return static::$czk;
     }
 
     public static function EUR(): Currency
