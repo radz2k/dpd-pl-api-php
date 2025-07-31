@@ -1,0 +1,46 @@
+{
+  "name": "radz2k/dpd-pl-api-php",
+  "description": "PHP DPD API client",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Kamil Radzik",
+      "email": "kamil.radzik@invp.pl"
+    }
+  ],
+  "require": {
+    "phpro/soap-client": "^2.4.2",
+    "php-soap/ext-soap-engine": "^1.4.1",
+    "sabre/xml": "^2.1",
+    "psr/http-client": "^1.0",
+    "psr/http-client-implementation": "^1.0",
+    "php-http/message-factory": "^1.0",
+    "psr/http-message": "^1.0",
+    "php-http/httplug": "^2.1",
+    "php-http/discovery": "^1.7",
+    "php-http/message": "^1.8",
+    "php-http/client-common": "^2.1"
+  },
+  "require-dev": {
+    "guzzlehttp/psr7": "^1.4",
+    "php-http/guzzle6-adapter": "^2",
+    "phpunit/phpunit": "~7.0",
+    "thomasweinert/phpunit-xpath-assertions": "^2.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "radz2k\\Dpd\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "radz2k\\DpdTests\\": "tests/"
+    }
+  },
+  "scripts": {
+    "test": [
+      "Composer\\Config::disableProcessTimeout",
+      "phpunit tests"
+    ]
+  }
+}
