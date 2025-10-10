@@ -443,7 +443,7 @@ class Api {
         $payload->setAuthData($this->getAuthDataStruct());
         $response = $this->obtainPackageServiceClient()->generatePackagesNumbersV4($payload);
         
-        Debugbar::addMessage($response);
+        //Debugbar::addMessage($response);
         
         return GeneratePackageNumbersResponse::from($response);
     }
@@ -458,7 +458,7 @@ class Api {
         $payload->setAuthData($this->getAuthDataStruct());
         $response = $this->obtainPackageServiceClient()->generateInternationalPackageNumbersV1($payload);
         
-        Debugbar::addMessage($response);
+        //Debugbar::addMessage($response);
         
         return GenerateInternationalPackageNumbersResponse::from($response);
     }
