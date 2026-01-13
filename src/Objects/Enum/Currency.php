@@ -13,6 +13,7 @@ final class Currency
     private static $chf;
     private static $sek;
     private static $nok;
+    private static $huf;
 
     /**
      * @var string
@@ -96,6 +97,15 @@ final class Currency
         }
 
         return static::$nok;
+    }
+    
+    public static function HUF(): Currency
+    {
+        if (null === static::$huf) {
+            static::$huf = new static('HUF');
+        }
+
+        return static::$huf;
     }
 
     public function __toString()
