@@ -8,8 +8,8 @@ use radz2k\Dpd\Soap\Types\GeneratePackagesNumbersV4Response;
 use radz2k\Dpd\Soap\Types\PackagePGRV2;
 use radz2k\Dpd\Soap\Types\ParcelPGRV2;
 
-class GeneratePackageNumbersResponse
-{
+class GeneratePackageNumbersResponse {
+
     private $packages;
 
     /**
@@ -17,8 +17,7 @@ class GeneratePackageNumbersResponse
      *
      * @param RegisteredPackage[] $packages
      */
-    protected function __construct(array $packages)
-    {
+    protected function __construct(array $packages) {
         $this->packages = $packages;
     }
 
@@ -29,21 +28,36 @@ class GeneratePackageNumbersResponse
      *
      * @return GeneratePackageNumbersResponse
      */
-    public static function from(GeneratePackagesNumbersV4Response $response)
-    {
+    public static function from(GeneratePackagesNumbersV4Response $response) {
         // Package validation info exception handler
         if ('OK' !== $response->getReturn()->getStatus() && null !== $response->getReturn()->getPackages() && is_array($response->getReturn()->getPackages()->Package)) {
             $packages = $response->getReturn()->getPackages()->Package;
+
             foreach ($packages as $package) {
+
+                // Package-level validation
                 if (null !== $package->getValidationDetails() && is_array($package->getValidationDetails()->ValidationInfo)) {
+                    Debugbar::addMessage("here");
                     $packageValidationInfo = $package->getValidationDetails()->ValidationInfo[0]->Info;
                     $packageValidationErrorId = $package->getValidationDetails()->ValidationInfo[0]->ErrorId;
                     throw new \Exception($packageValidationInfo, $packageValidationErrorId);
                 }
+
+                // Parcel-level validation
+                if (null !== $package->getParcels() && is_array($package->getParcels()->Parcel)) {
+                    foreach ($package->getParcels()->Parcel as $parcel) {
+                        if (null !== $parcel->getValidationDetails() && is_array($parcel->getValidationDetails()->ValidationInfo)) {
+                            $parcelValidationInfo = $parcel->getValidationDetails()->ValidationInfo[0]->Info;
+                            $parcelValidationErrorId = $parcel->getValidationDetails()->ValidationInfo[0]->ErrorId;
+                            throw new \Exception($parcelValidationInfo, $parcelValidationErrorId);
+                        }
+                    }
+                }
             }
+
             throw new \Exception("Something went wrong.", $response->getReturn()->getStatus());
         }
-        
+
         if ('OK' !== $response->getReturn()->getStatus()) {
             throw new \Exception($response->getReturn()->getStatus());
         }
@@ -73,20 +87,20 @@ class GeneratePackageNumbersResponse
                     }
 
                     $registeredParcels[] = new RegisteredParcel(
-                        $parcel->getParcelId(),
-                        $parcel->getStatus(),
-                        $parcel->getReference(),
-                        $parcelValidationDetails,
-                        $parcel->getWaybill()
+                            $parcel->getParcelId(),
+                            $parcel->getStatus(),
+                            $parcel->getReference(),
+                            $parcelValidationDetails,
+                            $parcel->getWaybill()
                     );
                 }
 
                 $registeredPackages[] = new RegisteredPackage(
-                    $package->getPackageId(),
-                    $package->getStatus(),
-                    $package->getReference(),
-                    $packageValidationDetails,
-                    $registeredParcels
+                        $package->getPackageId(),
+                        $package->getStatus(),
+                        $package->getReference(),
+                        $packageValidationDetails,
+                        $registeredParcels
                 );
             }
 
@@ -97,8 +111,7 @@ class GeneratePackageNumbersResponse
     /**
      * @return RegisteredPackage[]
      */
-    public function getPackages(): array
-    {
+    public function getPackages(): array {
         return $this->packages;
     }
 }
