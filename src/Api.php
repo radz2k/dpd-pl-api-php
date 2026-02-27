@@ -32,10 +32,10 @@ use Debugbar;
 
 class Api {
 
-    const PACKAGESERVICE_SANDBOX_WSDL_URL = 'http://dpdservicesdemo.dpd.com.pl/DPDPackageObjServicesService/DPDPackageObjServices?wsdl';
-    const PACKAGESERVICE_PRODUCTION_WSDL_URL = 'http://dpdservices.dpd.com.pl/DPDPackageObjServicesService/DPDPackageObjServices?wsdl';
-    const APPSERVICE_SANDBOX_WSDL_URL = 'http://dpdappservicesdemo.dpd.com.pl/DPDCRXmlServicesService/DPDCRXmlServices?wsdl';
-    const APPSERVICE_PRODUCTION_WSDL_URL = 'http://dpdappservices.dpd.com.pl/DPDCRXmlServicesService/DPDCRXmlServices?wsdl';
+    const PACKAGESERVICE_SANDBOX_WSDL_URL = 'https://dpdservicesdemo.dpd.com.pl/DPDPackageObjServicesService/DPDPackageObjServices?wsdl';
+    const PACKAGESERVICE_PRODUCTION_WSDL_URL = 'https://dpdservices.dpd.com.pl/DPDPackageObjServicesService/DPDPackageObjServices?wsdl';
+    const APPSERVICE_SANDBOX_WSDL_URL = 'https://dpdappservicesdemo.dpd.com.pl/DPDCRXmlServicesService/DPDCRXmlServices?wsdl';
+    const APPSERVICE_PRODUCTION_WSDL_URL = 'https://dpdappservices.dpd.com.pl/DPDCRXmlServicesService/DPDCRXmlServices?wsdl';
     const INFOSERVICE_SANDBOX_WSDL_URL = null;
     const INFOSERVICE_PRODUCTION_WSDL_URL = 'https://dpdinfoservices.dpd.com.pl/DPDInfoServicesObjEventsService/DPDInfoServicesObjEvents?wsdl';
 
