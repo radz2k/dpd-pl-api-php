@@ -37,7 +37,6 @@ class GeneratePackageNumbersResponse {
 
                 // Package-level validation
                 if (null !== $package->getValidationDetails() && is_array($package->getValidationDetails()->ValidationInfo)) {
-                    Debugbar::addMessage("here");
                     $packageValidationInfo = $package->getValidationDetails()->ValidationInfo[0]->Info;
                     $packageValidationErrorId = $package->getValidationDetails()->ValidationInfo[0]->ErrorId;
                     throw new \Exception($packageValidationInfo, $packageValidationErrorId);
