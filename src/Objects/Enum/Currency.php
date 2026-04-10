@@ -14,6 +14,7 @@ final class Currency
     private static $sek;
     private static $nok;
     private static $huf;
+    private static $gbp;
 
     /**
      * @var string
