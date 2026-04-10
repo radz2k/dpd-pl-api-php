@@ -108,6 +108,15 @@ final class Currency
         return static::$huf;
     }
 
+    public static function GBP(): Currency
+    {
+        if (null === static::$gbp) {
+            static::$gbp = new static('GBP');
+        }
+
+        return static::$gbp;
+    }
+
     public function __toString()
     {
         return $this->value;
